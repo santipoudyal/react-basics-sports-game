@@ -43,6 +43,11 @@ class Team extends React.Component{
         if(Math.random()>0.35) {
           goals += 1
 
+          setTimeout(()=>{
+
+            this.scoreSound.play ()
+          }, 100) 
+
         }
          this.setState((state,props)=>({
            shots: state.shots + 1,
@@ -53,6 +58,15 @@ class Team extends React.Component{
 
 
      render(){
+       let shotPercentageDiv
+       if (this.state.shots){
+         const shotPercentage = Math.round((this.state.score/ this.state.shots)*100)
+         shotPercentageDiv = (
+           <div>
+              <strong> shooting 5%: {shotPercentage}</strong>
+              </div>
+         )
+       }
        return(
          <div className="Team">
           <h3>{this.props.name}</h3>
@@ -67,6 +81,7 @@ class Team extends React.Component{
                 
                 <strong>Goals:</strong>{this.state.goals}
                 </div>
+                {shotPercentageDiv}
                 <button onClick ={this.shotHandler}>Shoot!</button>
           </div>
        )
@@ -74,13 +89,16 @@ class Team extends React.Component{
    }function App(props) {
      return(
        <div className="App">
+        <h1>Welcome to Camp Nou: {props.venus}</h1>
         <div className="stats">
+          <h2>Home</h2>
         <Team name= "FC BARCELONA"
         logo="./image/BAR.png" />
 
         <div className="SOCCER">
           <h1>VS</h1>
           </div>
+          <h2>Away</h2>
         
         <Team name= "FC BAYERN"
         logo="./image/FCB.png"/>
